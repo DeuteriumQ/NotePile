@@ -8,18 +8,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.example.notepile1.database.AppDatabase;
+import com.example.notepile1.database.NotebookDao;
+import com.example.notepile1.database.PageDao;
+import com.example.notepile1.models.Notebook;
+import com.example.notepile1.models.Page;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
 
     private String m_Text ="";
     private LibraryAdapter libraryAdapter;
-    private ArrayList<String> notebooks;
+    private List<Notebook> notebooks;
+    private List<Page> pages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +37,14 @@ public class LibraryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        notebooks = new ArrayList<String>();
+        AppDatabase db = App.getInstance().getDatabase();
+        final NotebookDao notebookDao = db.notebookDao();
+        final PageDao pageDao = db.pageDao();
 
-        libraryAdapter = new LibraryAdapter(this,notebooks);
+
+        notebooks = notebookDao.getAll();
+
+        libraryAdapter = new LibraryAdapter(this, notebooks);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,18 +53,29 @@ public class LibraryActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
                 builder.setTitle("New notebook");
 
-// Set up the input
                 final EditText input = new EditText(LibraryActivity.this);
                 input.setHint(R.string.new_book_hint);
                 builder.setView(input);
 
-// Set up the buttons
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         m_Text = input.getText().toString();
-                        notebooks.add(0, m_Text);
-                        libraryAdapter.notifyItemInserted(0);
+                        Notebook notebook = new Notebook(m_Text);
+                        long newId = notebookDao.insert(notebook);
+                        notebooks.add(notebook);
+
+                        libraryAdapter.notifyItemInserted(notebooks.size());
+
+                        for(int i = 0; i < 100; i++) {
+                            Page page = new Page(i);
+                            page.bookId = newId;
+                            page.setHTMLtext("");
+                            pageDao.insert(page);
+                            Log.d("PageID:", " " + newId);
+                        }
+
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

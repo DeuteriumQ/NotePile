@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notepile1.database.AppDatabase;
+import com.example.notepile1.database.NotebookDao;
+import com.example.notepile1.models.Notebook;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHolder> {
     private Context context;
-    private ArrayList<String> list;
+    private List<Notebook> list;
 
-    public LibraryAdapter(Context context, ArrayList<String> list) {
+    public LibraryAdapter(Context context, List<Notebook> list) {
         this.context = context;
         this.list = list;
     }
@@ -37,16 +43,20 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemHolder itemHolder, int position) {
+    public void onBindViewHolder(@NonNull ItemHolder itemHolder, final int position) {
 
-        itemHolder.bookName.setText(list.get(position));
+        itemHolder.bookName.setText(list.get(position).name);
+        AppDatabase db = App.getInstance().getDatabase();
+        final NotebookDao notebookDao = db.notebookDao();
 
         itemHolder.linearLayout.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context, "Clicked long!", Toast.LENGTH_SHORT).show();
-                //delete operation dialog etc.
-                //actually get to itemholder
+                Log.d("Adapter", " " + position);
+                notebookDao.delete(list.get(position));
+                list.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, list.size());
                 return true;
             }
         });
