@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageFragment">
+    tools:context=".PageFragment"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="8dp"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
     <jp.wasabeef.richeditor.RichEditor
         android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></jp.wasabeef.richeditor.RichEditor>
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp">
 
-</FrameLayout>
+
+    </jp.wasabeef.richeditor.RichEditor>
+
+</LinearLayout>

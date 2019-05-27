@@ -64,8 +64,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHold
         itemHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BookActivity.class);
-                v.getContext().startActivity(intent);
+                Intent intent = new Intent(context, BookActivity.class);
+                intent.putExtra("DOC_ID", list.get(position).id);
+                Log.d("position", " " + list.get(position).id);
+                context.startActivity(intent);
             }
         });
     }

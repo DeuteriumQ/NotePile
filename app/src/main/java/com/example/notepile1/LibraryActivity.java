@@ -70,7 +70,7 @@ public class LibraryActivity extends AppCompatActivity {
                         for(int i = 0; i < 100; i++) {
                             Page page = new Page(i);
                             page.bookId = newId;
-                            page.setHTMLtext("");
+                            page.setHTMLtext("<div> Hello! " + String.valueOf(i) + "</div>");
                             pageDao.insert(page);
                             Log.d("PageID:", " " + newId);
                         }

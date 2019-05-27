@@ -1,5 +1,6 @@
 package com.example.notepile1;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -8,17 +9,24 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 
-public class BookActivity extends FragmentActivity {
+public class BookActivity extends AppCompatActivity {
 
     private static final int NUM_PAGES = 100;
     private PagerAdapter pagerAdapter;
-
+    private long docID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+
+        Intent intent = getIntent();
+        docID = intent.getLongExtra("DOC_ID", -1);
 
         ViewPager pager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -32,7 +40,12 @@ public class BookActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new PageFragment();
+            PageFragment fragment = new PageFragment();
+            Bundle bundle = new Bundle();
+            bundle.putLong("DOC_ID", docID);
+            bundle.putInt("POSITION", position);
+            fragment.setArguments(bundle);
+            return fragment;
         }
 
         @Override

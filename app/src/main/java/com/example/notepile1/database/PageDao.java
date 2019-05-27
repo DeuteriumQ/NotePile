@@ -22,6 +22,6 @@ public interface PageDao {
     @Delete
     void delete(Page page);
 
-    @Query("SELECT * FROM page WHERE bookId=:bookId")
-    List<Page> getPagesByBookId(long bookId);
+    @Query("SELECT * FROM page WHERE bookId=:bookId AND pageNum=:pageNum")
+    Page getPageByIdAndNum(long bookId, int pageNum);
 }
