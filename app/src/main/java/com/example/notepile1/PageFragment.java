@@ -2,8 +2,12 @@ package com.example.notepile1;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toolbar;
@@ -20,22 +24,31 @@ public class PageFragment extends Fragment {
     private Page page;
     private PageDao pageDao;
     private long docID;
+    private ViewGroup rootView;
+    private int num;
 
     public PageFragment() {
         // Required empty public constructor
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(String.valueOf(num));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
+        rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_page, container, false);
 
         docID = getArguments().getLong("DOC_ID", -1);
-        int num = getArguments().getInt("POSITION", -1);
+        num = getArguments().getInt("POSITION", -1);
         Log.d("Pagedeb", " " + docID);
+
+        setHasOptionsMenu(true);
 
         AppDatabase db = App.getInstance().getDatabase();
         pageDao = db.pageDao();
@@ -49,6 +62,9 @@ public class PageFragment extends Fragment {
         if(page != null)
             mEditor.setHtml(page.getHTMLtext());
         else mEditor.setHtml("<div> Page not loaded! </div>");
+
+        setHasOptionsMenu(true);
+
         return rootView;
     }
 
@@ -77,5 +93,16 @@ public class PageFragment extends Fragment {
             page.setHTMLtext(mEditor.getHtml());
             pageDao.update(page);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_bold : {
+                mEditor.setBullets();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
