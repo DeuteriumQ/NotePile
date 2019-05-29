@@ -22,6 +22,7 @@ import java.util.List;
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHolder> {
     private Context context;
     private List<Notebook> list;
+    private long bookID;
 
     public LibraryAdapter(Context context, List<Notebook> list) {
         this.context = context;
@@ -66,7 +67,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHold
             public void onClick(View v) {
                 Intent intent = new Intent(context, BookActivity.class);
                 intent.putExtra("DOC_ID", list.get(position).id);
-                Log.d("position", " " + list.get(position).id);
+                intent.putExtra("BOOK_NAME", list.get(position).name);
                 context.startActivity(intent);
             }
         });

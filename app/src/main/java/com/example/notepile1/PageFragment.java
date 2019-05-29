@@ -31,13 +31,6 @@ public class PageFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(String.valueOf(num));
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,6 +92,18 @@ public class PageFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_bold : {
+                mEditor.setBold();
+                return true;
+            }
+            case R.id.action_italic : {
+                mEditor.setItalic();
+                return true;
+            }
+            case R.id.action_underline : {
+                mEditor.setUnderline();
+                return true;
+            }
+            case R.id.action_list : {
                 mEditor.setBullets();
                 return true;
             }

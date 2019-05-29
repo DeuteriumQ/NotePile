@@ -6,9 +6,42 @@
     <item
         android:id="@+id/action_bold"
         android:orderInCategory="300"
-        android:title="User"
+        android:title="Bold"
+        android:icon="@drawable/boldicon"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_italic"
+        android:orderInCategory="310"
+        android:title="Italic"
+        android:icon="@drawable/italicicon"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_underline"
+        android:orderInCategory="320"
+        android:title="Underline"
+        android:icon="@drawable/underlineicon"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_list"
+        android:orderInCategory="330"
+        android:title="Put list"
         android:icon="@drawable/bookicon"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_goto"
+        android:orderInCategory="340"
+        android:title="Go to page"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_addimage"
+        android:orderInCategory="350"
+        android:title="Add image"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"

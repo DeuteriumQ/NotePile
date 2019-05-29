@@ -29,7 +29,6 @@ public class LibraryActivity extends AppCompatActivity {
     private LibraryAdapter libraryAdapter;
     private List<Notebook> notebooks;
     private List<Page> pages;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +61,16 @@ public class LibraryActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         m_Text = input.getText().toString();
                         Notebook notebook = new Notebook(m_Text);
-                        long newId = notebookDao.insert(notebook);
+                        long newID = notebookDao.insert(notebook);
+                        notebook.id = newID;
                         notebooks.add(notebook);
 
                         libraryAdapter.notifyItemInserted(notebooks.size());
 
                         for(int i = 0; i < 100; i++) {
                             Page page = new Page(i);
-                            page.bookId = newId;
-                            page.setHTMLtext("<div> Hello! " + String.valueOf(i) + "</div>");
+                            page.bookId = newID;
                             pageDao.insert(page);
-                            Log.d("PageID:", " " + newId);
                         }
 
 
@@ -96,27 +94,4 @@ public class LibraryActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_book, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 }
