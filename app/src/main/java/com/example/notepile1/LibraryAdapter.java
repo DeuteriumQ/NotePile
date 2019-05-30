@@ -1,8 +1,11 @@
 package com.example.notepile1;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +18,6 @@ import android.widget.Toast;
 import com.example.notepile1.database.AppDatabase;
 import com.example.notepile1.database.NotebookDao;
 import com.example.notepile1.models.Notebook;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHolder> {
@@ -65,10 +66,19 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHold
         itemHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BookActivity.class);
-                intent.putExtra("DOC_ID", list.get(position).id);
-                intent.putExtra("BOOK_NAME", list.get(position).name);
-                context.startActivity(intent);
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intent = new Intent(context, BookActivity.class);
+                    intent.putExtra("DOC_ID", list.get(position).id);
+                    intent.putExtra("BOOK_NAME", list.get(position).name);
+                    context.startActivity(intent);
+                } else {
+                   Toast toast = Toast.makeText(context, "You have not set storage permission",
+                           Toast.LENGTH_SHORT);
+                   toast.show();
+                }
             }
         });
     }

@@ -40,12 +40,12 @@
     <item
         android:id="@+id/action_addimage"
         android:orderInCategory="350"
-        android:title="Add image"
+        android:title="Add an image"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_removeimage"
+        android:orderInCategory="350"
+        android:title="Remove image"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
 </menu>
