@@ -2,10 +2,12 @@ package com.example.notepile1;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,11 +56,27 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ItemHold
         itemHolder.linearLayout.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
-                Log.d("Adapter", " " + position);
-                notebookDao.delete(list.get(position));
-                list.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, list.size());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Delete notebook?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        notebookDao.delete(list.get(position));
+                        list.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, list.size());
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
                 return true;
             }
         });
