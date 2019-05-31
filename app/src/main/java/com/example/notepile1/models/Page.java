@@ -4,7 +4,6 @@ package com.example.notepile1.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
-import android.net.Uri;
 
 @Entity(foreignKeys = @ForeignKey(entity = Notebook.class,
         parentColumns = "id",

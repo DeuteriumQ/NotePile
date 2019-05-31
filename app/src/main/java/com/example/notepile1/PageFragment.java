@@ -6,26 +6,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import com.example.notepile1.database.AppDatabase;
 import com.example.notepile1.database.PageDao;
 import com.example.notepile1.models.Page;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-
 import jp.wasabeef.richeditor.RichEditor;
 
 import static android.app.Activity.RESULT_OK;

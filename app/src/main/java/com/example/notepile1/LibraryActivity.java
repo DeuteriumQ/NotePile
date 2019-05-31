@@ -13,20 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
-
 import com.example.notepile1.database.AppDatabase;
 import com.example.notepile1.database.NotebookDao;
 import com.example.notepile1.database.PageDao;
 import com.example.notepile1.models.Notebook;
 import com.example.notepile1.models.Page;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
@@ -35,8 +29,6 @@ public class LibraryActivity extends AppCompatActivity {
     private String m_Text ="";
     private LibraryAdapter libraryAdapter;
     private List<Notebook> notebooks;
-    private List<Page> pages;
-    private LibraryActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

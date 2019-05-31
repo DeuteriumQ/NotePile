@@ -27,6 +27,4 @@ public interface NotebookDao {
 
     @Delete
     void delete(Notebook notebook);
-
-
 }

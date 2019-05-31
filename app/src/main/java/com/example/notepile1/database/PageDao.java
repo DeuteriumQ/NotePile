@@ -8,8 +8,6 @@ import android.arch.persistence.room.Update;
 
 import com.example.notepile1.models.Page;
 
-import java.util.List;
-
 @Dao
 public interface PageDao {
 
